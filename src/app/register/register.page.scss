@@ -1,0 +1,50 @@
+.login-container {
+    --background: #ebe7b4;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.center-image-box {
+    flex: 1;           
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-box {
+    width: 35%;
+    height: auto;
+    margin-top: 25%;
+}
+
+.logo-box img {
+    width: 100%;
+    height: auto;
+}
+
+.form-box {
+    padding: 20px;
+}
+
+.registrarse {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.btn-registrarse {
+  --background: #1d532a; /* Verde tipo éxito */
+  --background-activated: #477952;
+  --background-hover: #477952;
+  --border-radius: 50px;
+  font-weight: bold;
+}
+
+
+ion-item {
+    --background: transparent; 
+    --border-color: #a7263c;
+    --border-width: 2px;
+    --border-radius: 100px;
+    margin-bottom: 15px;
+}

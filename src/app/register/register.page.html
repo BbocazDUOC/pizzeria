@@ -1,0 +1,31 @@
+<ion-content class="login-container" [scrollY]="false">
+  <div class="center-image-box">
+    <div class="logo-box">
+      <img src="assets/img/bocaheader.png" alt="logo">
+    </div>
+  </div>
+
+  <div>
+    <h1>¡Únete y empieza a disfrutar!</h1>
+  </div>
+
+  <div class="form-box">
+    <ion-item lines="none">
+      <ion-input label="Nuevo Correo" labelPlacement="floating" placeholder="correo@ejemplo.com"
+        type="email" [(ngModel)]="registerData.email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-input label="Nueva Contraseña" labelPlacement="floating" placeholder="Crea tu clave"
+        type="password" [(ngModel)]="registerData.password"></ion-input>
+    </ion-item>
+
+    <div class="ion-padding-vertical">
+      <ion-button expand="block" shape="round" (click)="registrar()">CREAR CUENTA</ion-button>
+    </div>
+
+    <div class="rutas">
+      <p (click)="volverLogin()">¿Ya tienes cuenta? <b>Iniciar Sesión</b></p>
+    </div>
+  </div>
+</ion-content>

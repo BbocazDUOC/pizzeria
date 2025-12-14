@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Nuestro Menú 🍕</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="light">
+    <div class="categories-wrapper">
+      <div 
+        class="category" 
+        [class.active]="activeCategory === 'pizzas'" 
+        (click)="selectCategory('pizzas')">
+        Pizzas
+      </div>
+      <div 
+        class="category" 
+        [class.active]="activeCategory === 'bebidas'" 
+        (click)="selectCategory('bebidas')">
+        Bebidas
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="menu-welcome">
+    <h2>¡Bienvenido a nuestro menú!</h2>
+    <p>Selecciona una categoría para empezar a ver nuestros productos.</p>
+  </div>
+
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>

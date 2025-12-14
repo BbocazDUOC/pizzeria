@@ -1,0 +1,32 @@
+<ion-content class="login-container" [scrollY]="false">
+  <div class="center-image-box">
+    <div class="logo-box">
+      <img src="assets/img/bocaheader.png" alt="logo">
+    </div>
+  </div>
+
+  <div>
+    <h1>¡Compra, acumula puntos y disfruta de beneficios exclusivos!</h1>
+  </div>
+
+  <div class="form-box">
+    <ion-item lines="none">
+      <ion-input label="Usuario" labelPlacement="floating" placeholder="ejemplo@gmail.com"
+        type="email" [(ngModel)]="credentials.email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-input label="Contraseña" labelPlacement="floating" placeholder="**"
+        type="password" [(ngModel)]="credentials.password"></ion-input>
+    </ion-item>
+
+    <div class="ion-padding-vertical">
+      <ion-button expand="block" shape="round" (click)="login()">INGRESAR</ion-button>
+    </div>
+
+    <div class="rutas">
+      <p (click)="irInvitado()">Continuar como invitado</p>
+      <p (click)="irCrearCuenta()">¿No tienes cuenta? <b>Crear una</b></p>
+    </div>
+  </div>
+</ion-content>

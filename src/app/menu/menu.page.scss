@@ -1,0 +1,63 @@
+/* Toolbar superior */
+ion-toolbar:first-of-type {
+  --background: #802424; /* rojo oscuro Papa John’s */
+  --color: #fff8f0;       /* crema claro para el título */
+}
+
+/* Barra de categorías deslizable */
+.categories-wrapper {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  gap: 10px;
+
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; 
+  &::-webkit-scrollbar { display: none; } 
+}
+
+.category {
+  flex: 0 0 auto;
+  padding: 10px 20px;
+  background: #fff4e6; /* crema suave */
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease-in-out;
+  color: #802424; /* texto rojo oscuro */
+
+  &:hover {
+    background: #ffd6a5; /* naranja suave */
+    transform: scale(1.05);
+  }
+
+  &.active {
+    background: #d32f2f; /* rojo Papa John’s */
+    color: #fff8f0; /* texto crema */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+}
+
+/* Mensaje de bienvenida */
+.menu-welcome {
+  text-align: center;
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #802424; /* rojo oscuro */
+    margin-bottom: 5px;
+  }
+
+  p {
+    font-size: 16px;
+    color: #555; /* gris neutro */
+  }
+}
+
+/* Contenedor de contenido general */
+ion-content {
+  --background: #fff8f0; /* crema claro para todo el fondo */
+}
