@@ -1,22 +1,19 @@
-import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'; 
+import { Router, RouterModule } from '@angular/router';
+// 🛑 IMPORTACIÓN CORREGIDA
+import { IonicModule } from '@ionic/angular'; 
 import { addIcons } from 'ionicons';
-import { 
-  fastFoodOutline, 
-  receiptOutline, 
-  personOutline, 
-  pizzaOutline,       // icono de pizza
-  wineOutline         // ejemplo de bebida, puedes cambiarlo
+import {
+  fastFoodOutline,
+  receiptOutline,
+  personOutline,
 } from 'ionicons/icons';
-import { RouterModule } from '@angular/router'
 
-// Registramos los iconos para poder usarlos en el template
+
 addIcons({
   'fast-food-outline': fastFoodOutline,
   'receipt-outline': receiptOutline,
-  'person-outline': personOutline,
-  'pizza-outline': pizzaOutline,
-  'wine-outline': wineOutline
+  'person-outline': personOutline
 });
 
 @Component({
@@ -24,8 +21,27 @@ addIcons({
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonicModule, RouterModule],
+  // 🛑 SOLUCIÓN: Usar el módulo principal (IonicModule)
+  // ya que los componentes individuales no son Standalone en tu versión
+  imports: [
+    IonicModule, // Importa todos los componentes de Ionic (IonPage, IonTabBar, etc.)
+    RouterModule // Necesario para que <ion-router-outlet> funcione
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePage {
-  constructor() {}
+
+  constructor(private router: Router) {}
+
+  goMenu() {
+    this.router.navigate(['/home/menu']);
+  }
+
+  goPedidos() {
+    this.router.navigate(['/home/pedidos']);
+  }
+
+  goCuenta() {
+    this.router.navigate(['/home/cuenta']);
+  }
 }

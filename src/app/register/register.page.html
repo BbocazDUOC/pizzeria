@@ -1,31 +1,131 @@
-<ion-content class="login-container" [scrollY]="false">
-  <div class="center-image-box">
-    <div class="logo-box">
-      <img src="assets/img/bocaheader.png" alt="logo">
-    </div>
-  </div>
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear Cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <div>
-    <h1>¡Únete y empieza a disfrutar!</h1>
+<ion-content [fullscreen]="true" class="ion-padding register-container">
+
+  <div class="header-info ion-text-center">
+    <h1>Regístrate</h1> 
+    <p>Completa tus datos para unirte</p>
   </div>
 
   <div class="form-box">
-    <ion-item lines="none">
-      <ion-input label="Nuevo Correo" labelPlacement="floating" placeholder="correo@ejemplo.com"
-        type="email" [(ngModel)]="registerData.email"></ion-input>
-    </ion-item>
+    
+    <ion-card class="form-card">
+      <ion-card-content>
+        
+        <div class="input-group">
+          <label for="usuario"><ion-icon name="person-circle-outline"></ion-icon> Nombre de Usuario</label>
+          <input 
+            id="usuario"
+            type="text"
+            placeholder="Ej: pizzaman2024"
+            [(ngModel)]="registerData.usuario"
+            class="native-input-style">
+        </div>
 
-    <ion-item lines="none">
-      <ion-input label="Nueva Contraseña" labelPlacement="floating" placeholder="Crea tu clave"
-        type="password" [(ngModel)]="registerData.password"></ion-input>
-    </ion-item>
+        <div class="input-group">
+          <label for="nombre"><ion-icon name="text-outline"></ion-icon> Nombre</label>
+          <input 
+            id="nombre"
+            type="text"
+            placeholder="Tu nombre real"
+            [(ngModel)]="registerData.nombre"
+            class="native-input-style">
+        </div>
 
-    <div class="ion-padding-vertical">
-      <ion-button expand="block" shape="round" (click)="registrar()">CREAR CUENTA</ion-button>
+        <div class="input-group">
+          <label for="apellido"><ion-icon name="text-outline"></ion-icon> Apellido</label>
+          <input 
+            id="apellido"
+            type="text"
+            placeholder="Tu apellido"
+            [(ngModel)]="registerData.apellido"
+            class="native-input-style">
+        </div>
+
+        <div class="input-group">
+          <label for="email"><ion-icon name="mail-outline"></ion-icon> Correo Electrónico</label>
+          <input 
+            id="email"
+            type="email"
+            placeholder="ejemplo@correo.com"
+            [(ngModel)]="registerData.email"
+            class="native-input-style">
+        </div>
+
+        <div class="input-group">
+          <label for="edad"><ion-icon name="calendar-outline"></ion-icon> Edad</label>
+          <input 
+            id="edad"
+            type="number"
+            placeholder="Ej: 21"
+            [(ngModel)]="registerData.edad"
+            class="native-input-style">
+        </div>
+
+        <div class="input-group select-group">
+          <label for="genero"><ion-icon name="people-outline"></ion-icon> Género</label>
+          <select 
+            id="genero"
+            [(ngModel)]="registerData.genero"
+            class="native-select-style">
+            <option value="" disabled selected>Selecciona uno</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
+            <option value="Prefiero no decir">Prefiero no decir</option>
+          </select>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="form-card">
+      <ion-card-content>
+        
+        <div class="input-group">
+          <label for="password"><ion-icon name="lock-closed-outline"></ion-icon> Contraseña</label>
+          <input 
+            id="password"
+            type="password"
+            placeholder="Mínimo 4 caracteres"
+            [(ngModel)]="registerData.password"
+            class="native-input-style">
+        </div>
+
+        <div class="input-group">
+          <label for="repetirPassword"><ion-icon name="lock-closed-outline"></ion-icon> Repetir Contraseña</label>
+          <input 
+            id="repetirPassword"
+            type="password"
+            placeholder="Confirma tu clave"
+            [(ngModel)]="registerData.repetirPassword"
+            class="native-input-style">
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+
+    <div class="footer-buttons">
+      <ion-button expand="block" shape="round" size="large" (click)="registrar()">
+        CREAR CUENTA
+      </ion-button>
+      
+      <div class="login-link ion-text-center">
+        <p>¿Ya tienes cuenta? 
+          <a (click)="volverLogin()" class="primary-link">
+            Inicia Sesión aquí
+          </a>
+        </p>
+      </div>
     </div>
 
-    <div class="rutas">
-      <p (click)="volverLogin()">¿Ya tienes cuenta? <b>Iniciar Sesión</b></p>
-    </div>
   </div>
+
 </ion-content>

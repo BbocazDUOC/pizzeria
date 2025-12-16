@@ -22,21 +22,6 @@ export const routes: Routes = [
       {
         path: 'menu',
         loadComponent: () => import('./menu/menu.page').then(m => m.MenuPage),
-        children: [
-          {
-            path: 'pizzas',
-            loadComponent: () => import('./menu/pizzas/pizzas.page').then(m => m.PizzasPage)
-          },
-          {
-            path: 'bebidas',
-            loadComponent: () => import('./menu/bebidas/bebidas.page').then(m => m.BebidasPage)
-          },
-          {
-            path: '',
-            redirectTo: 'pizzas',
-            pathMatch: 'full'
-          }
-        ]
       },
       {
         path: 'pedidos',
@@ -54,6 +39,11 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
     ],
+  },
+  {
+    path: 'pago',
+    loadComponent: () => import('./pago/pago.page').then( m => m.PagoPage),
+    canActivate: [authGuard]
   },
   {
     path: '**',

@@ -1,31 +1,38 @@
+<!-- menu.page.html -->
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Nuestro Menú 🍕</ion-title>
+  <ion-toolbar>
+    <ion-title>La Bocarella</ion-title>
+    <ion-buttons slot="end" class="carrito">
+      <ion-button (click)="abrirCarrito()">
+        <ion-icon [icon]="carritoIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 
   <ion-toolbar color="light">
     <div class="categories-wrapper">
       <div 
+        *ngFor="let cat of categorias"
         class="category" 
-        [class.active]="activeCategory === 'pizzas'" 
-        (click)="selectCategory('pizzas')">
-        Pizzas
-      </div>
-      <div 
-        class="category" 
-        [class.active]="activeCategory === 'bebidas'" 
-        (click)="selectCategory('bebidas')">
-        Bebidas
+        [class.active]="activeCategory?.id === cat.id" 
+        (click)="selectCategory(cat)">
+        {{ cat.nombre }}
       </div>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="menu-welcome">
-    <h2>¡Bienvenido a nuestro menú!</h2>
-    <p>Selecciona una categoría para empezar a ver nuestros productos.</p>
+  <div class="productos-grid">
+    <div class="producto-card" *ngFor="let p of productos">
+      <h3>{{ p.nombre }}</h3>
+      <p>{{ p.descripcion }}</p>
+      <p><strong>${{ p.precio }}</strong></p>
+      
+      <!-- Botón para agregar al carrito -->
+      <ion-button expand="full" color="danger" (click)="agregarAlCarrito(p)">
+        Agregar al carrito
+      </ion-button>
+    </div>
   </div>
-
-  <ion-router-outlet></ion-router-outlet>
 </ion-content>

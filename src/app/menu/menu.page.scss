@@ -1,63 +1,96 @@
-/* Toolbar superior */
+/* ---------------- Toolbar superior ---------------- */
 ion-toolbar:first-of-type {
-  --background: #802424; /* rojo oscuro Papa John’s */
-  --color: #fff8f0;       /* crema claro para el título */
+  --background: #802424;
+  --color: #fff8f0;  
+  padding: 8px 12px;    
 }
 
-/* Barra de categorías deslizable */
+.carrito {
+  background: #193f15;    
+  border-radius: 12px;    
+  padding: 2px 12px;     
+
+  ion-icon {
+    color: #fff;
+    font-size: 1.4rem;
+  }
+}
+
 .categories-wrapper {
   display: flex;
   overflow-x: auto;
   padding: 10px;
   gap: 10px;
-
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; 
-  &::-webkit-scrollbar { display: none; } 
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .category {
   flex: 0 0 auto;
   padding: 10px 20px;
-  background: #fff4e6; /* crema suave */
+  background: #fff4e6;
   border-radius: 20px;
   font-weight: bold;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease-in-out;
-  color: #802424; /* texto rojo oscuro */
+  color: #641818;
 
   &:hover {
-    background: #ffd6a5; /* naranja suave */
+    background: #ff0000;
     transform: scale(1.05);
   }
 
   &.active {
-    background: #d32f2f; /* rojo Papa John’s */
-    color: #fff8f0; /* texto crema */
+    background: #832121;
+    color: #fff8f0; 
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   }
 }
 
-/* Mensaje de bienvenida */
-.menu-welcome {
-  text-align: center;
-  margin-bottom: 20px;
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
 
-  h2 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #802424; /* rojo oscuro */
-    margin-bottom: 5px;
+/* ---------------- TARJETAS DE PRODUCTOS ---------------- */
+.producto-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  h3 {
+    font-weight: bold;  /*ESTO PARA EL NOMBRE*/
+    color: #802424;
+    margin-bottom: 6px;
   }
 
   p {
-    font-size: 16px;
-    color: #555; /* gris neutro */
+    margin: 4px 0; /*ESTO PARA LA DESC*/
+    color: #000000;
+    font-weight: bold;
+    font-size: 0.9rem;
+
+    &:last-child {  /*ESTO PARA El precio*/
+      color: #d32f2f;
+      font-weight: bold;
+      font-size: 1rem;
+    }
   }
 }
 
-/* Contenedor de contenido general */
 ion-content {
-  --background: #fff8f0; /* crema claro para todo el fondo */
+  --background: #ebe7b4;
 }
+

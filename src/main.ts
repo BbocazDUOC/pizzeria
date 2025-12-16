@@ -11,7 +11,13 @@ import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { Drivers } from '@ionic/storage';
 
+// 🔹 HTTP CLIENT
+import { HttpClientModule } from '@angular/common/http';
+
 import { environment } from './environments/environment';
+
+import { provideLottieOptions } from 'ngx-lottie';
+import player from 'lottie-web';
 
 if (environment.production) {
   enableProdMode();
@@ -20,16 +26,25 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+
     provideIonicAngular(),
     provideRouter(routes),
 
-    SQLite, 
+    // 🔹 SQLite
+    SQLite,
 
+    // 🔹 Ionic Storage
     importProvidersFrom(
       IonicStorageModule.forRoot({
         name: '__pizzadb',
         driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]
-      })
-    )
+      }),
+      HttpClientModule // ✅ AÑADIDO AQUÍ
+    ),
+
+    // 🌀 LOTTIE
+    provideLottieOptions({
+      player: () => player
+    })
   ],
 });

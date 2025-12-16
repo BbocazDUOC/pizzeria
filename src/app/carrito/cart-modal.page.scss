@@ -1,0 +1,22 @@
+/* ---------------- Toolbar superior ---------------- */
+ion-toolbar:first-of-type {
+  --background: #802424;
+  --color: #fff8f0;  
+  padding: 8px 12px;    
+}
+
+.carrito {
+  background: #193f15;    
+  border-radius: 12px;    
+  padding: 2px 12px;     
+
+  ion-icon {
+    color: #fff;
+    font-size: 1.4rem;
+  }
+}
+
+ion-content {
+  --background: #ecebd6;
+}
+

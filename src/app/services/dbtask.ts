@@ -11,40 +11,48 @@ export class DatabaseService {
 
   private databaseObj: SQLiteObject | null = null;
   private isWeb: boolean = false;
-  
+
   // Observable para saber si la BD está lista
   public dbState = new BehaviorSubject<boolean>(false);
 
   constructor(
-    private plt: Platform, 
+    private plt: Platform,
     private sqlite: SQLite,
-    private storage: Storage 
+    private storage: Storage
   ) {
     this.init();
   }
 
   async init() {
-    // 1. Inicializar el Storage (para Web)
     await this.storage.create();
 
-    // 2. Detectar plataforma
     this.plt.ready().then(() => {
       if (this.plt.is('capacitor') || this.plt.is('cordova')) {
-        // Estamos en Celular -> Usar SQLite
         this.isWeb = false;
         this.createNativeDatabase();
       } else {
-        // Estamos en Web (Chrome/Serve) -> Usar Storage
         this.isWeb = true;
-        this.seedWebDatabase(); // Crear usuario de prueba en Web
+        this.seedWebDatabase();
         this.dbState.next(true);
       }
     });
   }
 
-  // ==========================================
-  // LÓGICA NATIVA (CELULAR - SQLITE)
-  // ==========================================
+  // ------------------- SESIÓN (NUEVO) -------------------
+  // Guardamos el email del usuario logueado actualmente
+  async createSession(email: string) {
+    await this.storage.set('session_active', email);
+  }
+
+  async getSession(): Promise<string | null> {
+    return await this.storage.get('session_active');
+  }
+
+  async closeSession() {
+    await this.storage.remove('session_active');
+  }
+
+  // ------------------- NATIVE (SQLite) -------------------
   private createNativeDatabase() {
     this.sqlite.create({
       name: 'pizzaproject.db',
@@ -60,90 +68,146 @@ export class DatabaseService {
       await this.databaseObj?.executeSql(`
         CREATE TABLE IF NOT EXISTS users (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
+          usuario TEXT,
+          nombre TEXT,
+          apellido TEXT,
           email TEXT UNIQUE,
+          edad INTEGER,
+          genero TEXT,
           password TEXT
         )
       `, []);
-      
-      // Crear usuario prueba si no existe
-      const res = await this.databaseObj?.executeSql('SELECT * FROM users', []);
-      if (res.rows.length === 0) {
-        await this.databaseObj?.executeSql(
-          'INSERT INTO users (email, password) VALUES (?, ?)', 
-          ['ejemplo@gmail.com', '1234']
-        );
-      }
-      
       this.dbState.next(true);
     } catch (e) {
       console.error('Error tablas nativas', e);
     }
   }
 
-  // ==========================================
-  // LÓGICA WEB (NAVEGADOR - IONIC STORAGE)
-  // ==========================================
+  // ------------------- WEB (Ionic Storage) -------------------
   private async seedWebDatabase() {
     const users = await this.storage.get('users');
-    if (!users) {
-      // Si no hay usuarios en la web, creamos el de prueba
-      const initialUsers = [{ email: 'ejemplo@gmail.com', password: '1234' }];
-      await this.storage.set('users', initialUsers);
-      console.log('Web Database inicializada con usuario de prueba.');
-    }
+    if (!users) await this.storage.set('users', []);
   }
 
-  // ==========================================
-  // MÉTODOS PÚBLICOS (HÍBRIDOS)
-  // ==========================================
+  // ------------------- CRUD USUARIOS -------------------
 
-  async registerUser(email: string, pass: string): Promise<boolean> {
+  async registerUser(usuario: string, nombre: string, apellido: string, email: string, edad: number, genero: string, pass: string): Promise<boolean> {
     if (this.isWeb) {
-      // --- VERSIÓN WEB ---
       const users = (await this.storage.get('users')) || [];
-      // Verificar si ya existe
       const existe = users.find((u: any) => u.email === email);
       if (existe) return false;
 
-      // Guardar nuevo
-      users.push({ email, password: pass });
+      users.push({ usuario, nombre, apellido, email, edad, genero, password: pass });
       await this.storage.set('users', users);
       return true;
 
     } else {
-      // --- VERSIÓN MÓVIL (SQL) ---
       if (!this.databaseObj) return false;
       try {
         await this.databaseObj.executeSql(
-          'INSERT INTO users (email, password) VALUES (?, ?)', 
-          [email, pass]
+          `INSERT INTO users (usuario, nombre, apellido, email, edad, genero, password) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+          [usuario, nombre, apellido, email, edad, genero, pass]
         );
         return true;
       } catch (e) {
+        console.error('Error registro nativo', e);
         return false;
       }
     }
   }
 
   async loginUser(email: string, pass: string): Promise<boolean> {
+    let access = false;
     if (this.isWeb) {
-      // --- VERSIÓN WEB ---
       const users = (await this.storage.get('users')) || [];
       const user = users.find((u: any) => u.email === email && u.password === pass);
-      return !!user; // Devuelve true si lo encontró
-
+      access = !!user;
     } else {
-      // --- VERSIÓN MÓVIL (SQL) ---
       if (!this.databaseObj) return false;
       try {
         const res = await this.databaseObj.executeSql(
-          'SELECT * FROM users WHERE email = ? AND password = ?', 
-          [email, pass]
+          'SELECT * FROM users WHERE email = ? AND password = ?', [email, pass]
         );
-        return res.rows.length > 0;
+        access = res.rows.length > 0;
       } catch (e) {
         return false;
       }
     }
+
+    // SI EL LOGIN ES CORRECTO, CREAMOS LA SESIÓN AUTOMÁTICAMENTE
+    if (access) {
+      await this.createSession(email);
+    }
+    return access;
+  }
+
+  async getUsuario(email: string): Promise<any> {
+    if (this.isWeb) {
+      const users = (await this.storage.get('users')) || [];
+      return users.find((u: any) => u.email === email) || null;
+    } else {
+      if (!this.databaseObj) return null;
+      try {
+        const res = await this.databaseObj.executeSql('SELECT * FROM users WHERE email = ?', [email]);
+        if (res.rows.length > 0) {
+          return res.rows.item(0);
+        }
+        return null;
+      } catch (e) {
+        return null;
+      }
+    }
+  }
+
+  async actualizarUsuario(usuarioObj: any): Promise<boolean> {
+    if (this.isWeb) {
+      const users = (await this.storage.get('users')) || [];
+      // Buscamos por EMAIL porque es único y no se edita en el perfil
+      const index = users.findIndex((u: any) => u.email === usuarioObj.email);
+      if (index === -1) return false;
+
+      // Actualizamos campos
+      users[index].usuario = usuarioObj.usuario;
+      users[index].nombre = usuarioObj.nombre;
+      users[index].apellido = usuarioObj.apellido;
+      users[index].edad = usuarioObj.edad;
+      users[index].genero = usuarioObj.genero;
+      // No tocamos la password si no viene en el objeto
+
+      await this.storage.set('users', users);
+      return true;
+
+    } else {
+      if (!this.databaseObj) return false;
+      try {
+        const query = `UPDATE users SET usuario=?, nombre=?, apellido=?, edad=?, genero=? WHERE email=?`;
+        await this.databaseObj.executeSql(query, [
+          usuarioObj.usuario,
+          usuarioObj.nombre,
+          usuarioObj.apellido,
+          usuarioObj.edad,
+          usuarioObj.genero,
+          usuarioObj.email // El WHERE
+        ]);
+        return true;
+      } catch (e) {
+        console.error('Error actualizando nativo', e);
+        return false;
+      }
+    }
+  }
+
+  // ------------------- CARRITO -------------------
+
+  async guardarCarrito(carrito: any[]) {
+    await this.storage.set('carrito', carrito);
+  }
+
+  async obtenerCarrito(): Promise<any[]> {
+    return (await this.storage.get('carrito')) || [];
+  }
+
+  async vaciarCarrito() {
+    await this.storage.remove('carrito');
   }
 }

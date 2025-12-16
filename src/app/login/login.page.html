@@ -1,32 +1,56 @@
 <ion-content class="login-container" [scrollY]="false">
-  <div class="center-image-box">
+
+  <div class="login-wrapper ion-padding" [class.blur]="loading"> 
+    
     <div class="logo-box">
-      <img src="assets/img/bocaheader.png" alt="logo">
+      <img src="assets/img/bocaheader.png" alt="logo" class="logo-img">
     </div>
-  </div>
 
-  <div>
     <h1>¡Compra, acumula puntos y disfruta de beneficios exclusivos!</h1>
+
+    <div class="form-box">
+
+      <div class="input-group">
+        <label for="email">Correo electrónico</label>
+        <input 
+          id="email"
+          type="email" 
+          placeholder="ejemplo@correo.com"
+          [(ngModel)]="credentials.email" 
+          class="native-input-style">
+      </div>
+
+      <div class="input-group">
+        <label for="password">Contraseña</label>
+        <input 
+          id="password"
+          type="password" 
+          placeholder="********"
+          [(ngModel)]="credentials.password" 
+          class="native-input-style">
+      </div>
+
+      <ion-button expand="block" shape="round" class="login-btn" (click)="login()">
+        INGRESAR
+      </ion-button>
+
+      <div class="rutas ion-text-center">
+        <p (click)="irInvitado()">Continuar como invitado</p>
+        <p (click)="irCrearCuenta()">¿No tienes cuenta? <b>Crear una</b></p>
+      </div>
+
+    </div>
   </div>
 
-  <div class="form-box">
-    <ion-item lines="none">
-      <ion-input label="Usuario" labelPlacement="floating" placeholder="ejemplo@gmail.com"
-        type="email" [(ngModel)]="credentials.email"></ion-input>
-    </ion-item>
-
-    <ion-item lines="none">
-      <ion-input label="Contraseña" labelPlacement="floating" placeholder="**"
-        type="password" [(ngModel)]="credentials.password"></ion-input>
-    </ion-item>
-
-    <div class="ion-padding-vertical">
-      <ion-button expand="block" shape="round" (click)="login()">INGRESAR</ion-button>
-    </div>
-
-    <div class="rutas">
-      <p (click)="irInvitado()">Continuar como invitado</p>
-      <p (click)="irCrearCuenta()">¿No tienes cuenta? <b>Crear una</b></p>
-    </div>
+  <div class="loader-overlay" *ngIf="loading">
+    <ng-lottie
+      [options]="{
+        path: 'assets/animations/animacioncargando.json',
+        autoplay: true,
+        loop: true
+      }"
+      style="width: 180px; height: 180px">
+    </ng-lottie>
   </div>
+
 </ion-content>

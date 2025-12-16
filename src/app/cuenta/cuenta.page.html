@@ -1,15 +1,59 @@
 <ion-header>
   <ion-toolbar color="medium">
-    <ion-title>Cuenta</ion-title>
+    <ion-title>Mi Cuenta</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" style="background-color: #f9f5ef;">
+  <div class="form-box" style="text-align:center">
 
-  <h2>Bienvenido a tu cuenta</h2>
+    <!-- Foto de perfil -->
+    <div style="margin-bottom:20px;">
+      <img [src]="usuario.foto || 'assets/avatar.png'" 
+           style="width:120px; height:120px; border-radius:50%; object-fit:cover;"/>
+      <ion-button fill="outline" size="small" (click)="cambiarFoto()" style="margin-top:10px;">
+        Cambiar foto
+      </ion-button>
+    </div>
 
-  <ion-button expand="block" color="danger" (click)="logout()">
-    Cerrar sesión
-  </ion-button>
+    <!-- Formulario -->
+    <ion-item>
+      <ion-label position="floating">Nombre de usuario</ion-label>
+      <ion-input [(ngModel)]="usuario.usuario"></ion-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-label position="floating">Nombre real</ion-label>
+      <ion-input [(ngModel)]="usuario.nombre"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Apellido real</ion-label>
+      <ion-input [(ngModel)]="usuario.apellido"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Correo electrónico</ion-label>
+      <ion-input [(ngModel)]="usuario.email" readonly disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Edad</ion-label>
+      <ion-input type="number" [(ngModel)]="usuario.edad"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Género</ion-label>
+      <ion-select [(ngModel)]="usuario.genero" interface="action-sheet">
+        <ion-select-option value="Masculino">Masculino</ion-select-option>
+        <ion-select-option value="Femenino">Femenino</ion-select-option>
+        <ion-select-option value="Otro">Otro</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <div class="ion-padding-vertical">
+      <ion-button expand="block" color="success" (click)="guardarCambios()">Guardar cambios</ion-button>
+      <ion-button expand="block" color="danger" (click)="logout()">Cerrar sesión</ion-button>
+    </div>
+  </div>
 </ion-content>

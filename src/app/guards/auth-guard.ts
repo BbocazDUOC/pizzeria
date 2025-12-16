@@ -1,25 +1,26 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { DatabaseService } from '../services/dbtask';
 
-export const authGuard: CanActivateFn = async (route, state) => {
+export const authGuard: CanActivateFn = async () => {
   const router = inject(Router);
   const toastCtrl = inject(ToastController);
+  const db = inject(DatabaseService);
 
-  const estaLogueado = localStorage.getItem('ingresado');  // Leemos el estado de login
+  const session = await db.getSession(); // 👈 LO CORRECTO
 
-  if (estaLogueado === 'true') {
-    return true;  // Deja pasar si el usuario está logeado
-  } else {
-    // Si no está logeado, muestra el toast y redirige al login
-    const toast = await toastCtrl.create({
-      message: 'Debes iniciar sesión para acceder a Pedidos',
-      duration: 2000,
-      color: 'danger'
-    });
-    toast.present();
-
-    router.navigate(['/login']);
-    return false;
+  if (session) {
+    return true; // deja pasar
   }
+
+  const toast = await toastCtrl.create({
+    message: 'Debes iniciar sesión para acceder',
+    duration: 2000,
+    color: 'danger'
+  });
+  toast.present();
+
+  router.navigate(['/login']);
+  return false;
 };

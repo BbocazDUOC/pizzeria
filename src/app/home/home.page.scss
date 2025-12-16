@@ -1,27 +1,47 @@
-#container {
-  text-align: center;
+/* home.page.scss o home.css */
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+/*
+* Definición de colores de la barra de pestañas (ion-tab-bar).
+* Esta es la forma más limpia de Ionic para controlar el estado activo/inactivo.
+*/
+ion-tab-bar {
+  /* Color del texto e icono cuando la pestaña está INACTIVA (por defecto) */
+  --color: black;
+  
+  /* Color del texto e icono cuando la pestaña está ACTIVA */
+  --color-selected: darkgreen; 
+  
+  /* Puedes ajustar el color de fondo de la barra si lo deseas (opcional) */
+  /* --background: #f7f7f7; */ 
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+/* * Ajuste fino del color del icono y la etiqueta para sobrescribir el valor 
+* por defecto de Ionic y usar tu color específico (rgb(31, 66, 20))
+*/
+
+/* Color para los iconos Inactivos (tu color original: verde oscuro) */
+ion-tab-button ion-icon {
+  color: rgb(31, 66, 20);
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+/* Color para las etiquetas Inactivas */
+ion-tab-button ion-label {
+  color: black;
+  font-size: 0.7em; 
 }
 
-#container a {
-  text-decoration: none;
+
+/* * Mejoras visuales para el estado ACTIVO
+* Esto asegura que el color 'darkgreen' definido en --color-selected se aplique
+*/
+
+/* Estilo para los iconos de la pestaña activa */
+ion-tab-button[aria-selected="true"] ion-icon {
+  color: darkgreen; /* Asegura que el ícono activo sea verde fuerte */
+}
+
+/* Estilo para las etiquetas de la pestaña activa */
+ion-tab-button[aria-selected="true"] ion-label {
+  color: darkgreen; /* Asegura que la etiqueta activa sea verde fuerte */
+  font-weight: bold; /* Destaca el texto activo */
 }

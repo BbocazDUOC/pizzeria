@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Carrito 🛒</ion-title>
+    <ion-buttons slot="end">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="carrito.length === 0" style="text-align:center; margin-top:20px;">
+    <p>Tu carrito está vacío</p>
+  </div>
+
+  <ion-list *ngIf="carrito.length > 0">
+    <ion-item *ngFor="let p of carrito">
+      <ion-label>
+        <h3>{{p.nombre}}</h3>
+        <p>${{p.precio}} x {{p.cantidad}}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="aumentarCantidad(p)">
+          <ion-icon [icon]="iconAdd"></ion-icon>
+        </ion-button>
+        <ion-button (click)="disminuirCantidad(p)">
+          <ion-icon [icon]="iconRemove"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="eliminarProducto(p)">
+          <ion-icon [icon]="iconTrash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="carrito.length > 0" style="margin-top:20px; text-align:right;">
+    <h2>Total: ${{ totalCarrito() }}</h2>
+    <ion-button color="danger" expand="block" (click)="vaciarCarrito()">
+      Vaciar Carrito
+    </ion-button>
+    <ion-button color="success" expand="block" (click)="irAlPago()">
+      Ir al pago
+    </ion-button>
+  </div>
+</ion-content>

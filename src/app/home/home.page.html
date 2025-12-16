@@ -2,17 +2,17 @@
 
   <ion-tab-bar slot="bottom">
 
-    <ion-tab-button tab="menu" href="/home/menu">
+    <ion-tab-button tab="menu" (click)="goMenu()">
       <ion-icon name="fast-food-outline"></ion-icon>
       <ion-label>Menú</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="pedidos" href="/home/pedidos">
+    <ion-tab-button tab="pedidos" (click)="goPedidos()">
       <ion-icon name="receipt-outline"></ion-icon>
       <ion-label>Pedidos</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="cuenta" href="/home/cuenta">
+    <ion-tab-button tab="cuenta" (click)="goCuenta()">
       <ion-icon name="person-outline"></ion-icon>
       <ion-label>Cuenta</ion-label>
     </ion-tab-button>

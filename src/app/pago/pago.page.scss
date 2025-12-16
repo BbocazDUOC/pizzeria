@@ -1,0 +1,105 @@
+/* =============================================== */
+/* --- Estilos de Layout General --- */
+/* =============================================== */
+
+ion-card-content {
+    /* Mantiene el padding superior a 0 para mejor control del contenido interno */
+    padding-top: 0;
+}
+
+/* Ajuste para los items de la lista de productos */
+ion-list {
+    margin-top: 10px;
+    padding: 0;
+}
+
+ion-item {
+    /* Elimina el padding horizontal predeterminado de los items de la lista de productos */
+    --padding-start: 0;
+    --inner-padding-end: 0;
+}
+
+/* Estilo para el contenedor del Total */
+.total-pago {
+    margin-top: 20px;
+    text-align: right;
+    padding-top: 15px; /* Añadido un poco de espacio para separar de la lista */
+    border-top: 1px solid var(--ion-color-step-100, #eee); /* Separador visual */
+}
+
+/* Estilo para los títulos de sección */
+.seccion-titulo {
+    margin-top: 20px; 
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+}
+
+/* Estilo para el texto de coordenadas de ubicación */
+.coordenadas-texto {
+    color: var(--ion-color-medium);
+    margin: 5px 0 10px 0;
+}
+
+/* =============================================== */
+/* --- Estilos del Mapa (Leaflet) --- */
+/* =============================================== */
+
+/* Estilo para el contenedor del mapa */
+#mapaId {
+    height: 300px; 
+    width: 100%;
+    border: 1px solid var(--ion-color-medium, #ccc); 
+    border-radius: 8px;
+    margin-top: 10px;
+    overflow: hidden; 
+}
+
+/* Estilo para el botón GPS */
+.boton-gps {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Corregir posible problema de íconos en Leaflet */
+.leaflet-container a {
+    color: inherit;
+}
+
+/* =============================================== */
+/* --- Estilos del Footer --- */
+/* =============================================== */
+
+/* Estilo para el botón de pago en el footer */
+ion-footer ion-button {
+    height: 50px; 
+    font-weight: bold;
+}
+
+/* =============================================== */
+/* --- Estilos para la Animación Lottie (Overlay) --- */
+/* =============================================== */
+
+.loader-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Para cubrir toda la pantalla y funcionar como una superposición */
+    height: 100vh; 
+    width: 100%;
+    position: fixed; /* Fija la posición en la ventana */
+    top: 0;
+    left: 0;
+    /* Fondo ligeramente transparente para indicar que la página sigue viva */
+    background: rgba(255, 255, 255, 0.95); 
+    z-index: 9999; /* Asegura que esté por encima de todo */
+}
+
+.loader-message {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+}

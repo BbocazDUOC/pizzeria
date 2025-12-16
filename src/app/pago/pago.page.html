@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home/menu"></ion-back-button>
+        </ion-buttons>
+
+        <ion-title>Resumen del Pedido</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<div class="loader-overlay" *ngIf="isProcessing">
+    <ng-lottie
+      [options]="{
+        path: 'assets/animations/pago.json',
+        autoplay: true,
+        loop: true
+      }"
+      style="width: 180px; height: 180px">
+    </ng-lottie>
+    <ion-text color="dark">
+        <p class="loader-message">Procesando tu pago...</p>
+    </ion-text>
+</div>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+    <div *ngIf="!isProcessing">
+
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Detalle de la Compra</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+                <ion-list lines="inset">
+                    <ion-item *ngIf="carrito.length === 0">
+                        <ion-label>El carrito está vacío. Regresa al menú.</ion-label>
+                    </ion-item>
+
+                    <ion-item *ngFor="let producto of carrito">
+                        <ion-label>
+                            <h3>{{ producto.nombre }}</h3>
+                            <p>{{ producto.cantidad }} x {{ producto.precio | currency:'CLP':'symbol':'1.0-0':'es-CL' }}</p>
+                        </ion-label>
+                        <span slot="end">
+                            <strong>{{ producto.cantidad * producto.precio | currency:'CLP':'symbol':'1.0-0':'es-CL' }}</strong>
+                        </span>
+                    </ion-item>
+                </ion-list>
+
+                <div class="total-pago">
+                    <h2>Total a Pagar:
+                        <strong>{{ totalCarrito() | currency:'CLP':'symbol':'1.0-0':'es-CL' }}</strong>
+                    </h2>
+                </div>
+
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card class="card-ubicacion">
+            <ion-card-header>
+                <ion-card-title>Ubicación</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+
+                <h3 class="seccion-titulo">Ubicación de Envío</h3>
+
+                <ion-item lines="none" class="ion-no-padding">
+                    <ion-label position="stacked">Coordenadas de Entrega</ion-label>
+                    <p class="coordenadas-texto">{{ ubicacionTexto }}</p>
+                </ion-item>
+
+                <div id="mapaId" class="mapa-container"></div>
+
+                <ion-button 
+                    expand="block" 
+                    fill="outline" 
+                    color="secondary" 
+                    (click)="obtenerUbicacion()" 
+                    class="boton-gps">
+                    Usar mi ubicación actual (GPS)
+                </ion-button>
+
+                <h3 class="seccion-titulo">Datos de Pago (Simulado)</h3>
+
+                <p>
+                    [AQUÍ VA EL FORMULARIO PARA DATOS DE TARJETA / DIRECCIÓN / MÉTODO DE PAGO]
+                    <br>
+                    *Este paso es simulado, el pago se procesa al hacer clic en el botón.
+                </p>
+
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>
+
+<ion-footer *ngIf="!isProcessing">
+    <ion-toolbar>
+        <ion-button 
+            expand="full" 
+            color="primary" 
+            (click)="confirmarPago()" 
+            [disabled]="carrito.length === 0 || !ubicacion || isProcessing">
+            
+            Pagar y Finalizar Pedido
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>

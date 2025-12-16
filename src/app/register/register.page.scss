@@ -1,50 +1,136 @@
-.login-container {
-    --background: #ebe7b4;
+/* ========================================= */
+/* 1. CONTENEDOR PRINCIPAL Y BASE            */
+/* ========================================= */
+
+.register-container {
+    --background: #f4f5f8; 
+    
+    /* Centrado del bloque principal en la pantalla */
     display: flex;
-    flex-direction: column;
-    height: 100%;
+    justify-content: center; /* Centra el bloque horizontalmente */
+    align-items: flex-start; /* Alinea el contenido hacia arriba */
+    min-height: 100%;
+    
+    /* Padding lateral para evitar que el contenido se pegue a los bordes */
+    padding: 0 16px; 
 }
 
-.center-image-box {
-    flex: 1;           
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo-box {
-    width: 35%;
-    height: auto;
-    margin-top: 25%;
-}
-
-.logo-box img {
+/* Encabezado y Título */
+.header-info {
+    margin: 20px 0;
     width: 100%;
-    height: auto;
+    max-width: 450px;
+    /* Aseguramos que el bloque esté centrado si tiene un max-width */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.form-box {
-    padding: 20px;
+.header-info h1 {
+    color: var(--ion-color-primary); 
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    text-align: center; 
 }
 
-.registrarse {
-    margin-top: 25px;
+.header-info p {
+    color: gray;
+    font-size: 0.95rem;
     text-align: center;
 }
 
-.btn-registrarse {
-  --background: #1d532a; /* Verde tipo éxito */
-  --background-activated: #477952;
-  --background-hover: #477952;
-  --border-radius: 50px;
-  font-weight: bold;
+/* Contenedor del Formulario */
+.form-box {
+    width: 100%;
+    max-width: 450px; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-card {
+    border-radius: 12px;
+    margin: 10px 0 20px 0; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 
-ion-item {
-    --background: transparent; 
-    --border-color: #a7263c;
-    --border-width: 2px;
-    --border-radius: 100px;
-    margin-bottom: 15px;
+/* ========================================= */
+/* 2. INPUTS NATIVOS (ESTRUCTURA Y ESTILO)   */
+/* ========================================= */
+
+.input-group {
+    margin-bottom: 20px;
+    padding-top: 5px;
+    position: relative;
+    z-index: 10;
+    
+    label {
+        display: flex;
+        align-items: center;
+        font-size: 0.85rem;
+        color: var(--ion-color-medium); 
+        font-weight: 500;
+        margin-bottom: 5px;
+        
+        ion-icon {
+            font-size: 1.1rem;
+            margin-right: 8px;
+            color: var(--ion-color-medium);
+        }
+    }
+}
+
+/* Estilo del INPUT HTML nativo y SELECT (Compatibilidad AS) */
+.native-input-style,
+.native-select-style {
+    width: 100%;
+    padding: 10px 10px;
+    border: 1px solid var(--ion-color-light); 
+    border-radius: 8px; 
+    font-size: 1rem;
+    color: #000;
+    background-color: var(--ion-color-light); 
+
+    &:focus {
+        outline: none;
+        border-color: var(--ion-color-primary); 
+        box-shadow: 0 0 0 2px rgba(var(--ion-color-primary-rgb), 0.2);
+    }
+}
+
+/* Estilo específico para el SELECT nativo */
+.native-select-style {
+    appearance: none; 
+    /* Ícono de flecha (Data URL SVG) para simular el comportamiento de ion-select */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="gray" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px; 
+}
+
+
+/* ========================================= */
+/* 3. BOTONES Y ENLACES (FOOTER)             */
+/* ========================================= */
+
+.footer-buttons {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    
+    ion-button {
+        --border-radius: 25px; 
+    }
+}
+
+.login-link p {
+    color: gray;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    
+    .primary-link {
+        color: var(--ion-color-primary);
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
 }
